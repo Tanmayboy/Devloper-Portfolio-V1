@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Code, Database, Figma, GitMerge, Server } from 'lucide-react';
 import { ReactIcon } from '../icons/ReactIcon';
+import { motion } from 'framer-motion';
 
 const profileImage = PlaceHolderImages.find(p => p.id === 'profile-picture');
 
@@ -14,6 +15,20 @@ const skills = [
   { icon: GitMerge, name: 'Git & GitHub', color: 'text-slate-400' },
   { icon: Figma, name: 'Figma', color: 'text-pink-400' },
 ];
+
+const SkillCard = ({ skill, index }: { skill: typeof skills[0], index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.5 + index * 0.1 }}
+    whileHover={{ scale: 1.1, y: -5 }}
+  >
+    <Card className="p-4 flex flex-col items-center justify-center gap-2 bg-card/50 hover:bg-card transition-colors h-full">
+      <skill.icon className={`w-8 h-8 ${skill.color}`} />
+      <p className="text-sm font-medium text-center">{skill.name}</p>
+    </Card>
+  </motion.div>
+);
 
 export default function AboutSection() {
   return (
@@ -49,11 +64,8 @@ export default function AboutSection() {
           <div className="w-full max-w-md">
             <h3 className="text-xl font-bold mb-4 text-center font-headline text-primary">My Skills</h3>
             <div className="grid grid-cols-3 gap-4">
-              {skills.map((skill) => (
-                <Card key={skill.name} className="p-4 flex flex-col items-center justify-center gap-2 bg-card/50 hover:bg-card transition-colors">
-                  <skill.icon className={`w-8 h-8 ${skill.color}`} />
-                  <p className="text-sm font-medium text-center">{skill.name}</p>
-                </Card>
+              {skills.map((skill, index) => (
+                <SkillCard key={skill.name} skill={skill} index={index} />
               ))}
             </div>
           </div>

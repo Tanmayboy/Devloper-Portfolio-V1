@@ -4,7 +4,7 @@ import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ContactSection from '@/components/sections/ContactSection';
-import { Separator } from '@/components/ui/separator';
+import { AnimatedSection } from '@/components/AnimatedSection';
 
 export default function Home() {
   return (
@@ -13,9 +13,15 @@ export default function Home() {
       <main className="flex-grow">
         <HeroSection />
         <div className="container mx-auto px-4 md:px-6 space-y-20 md:space-y-32">
-          <AboutSection />
-          <ProjectsSection />
-          <ContactSection />
+          <AnimatedSection>
+            <AboutSection />
+          </AnimatedSection>
+          <AnimatedSection>
+            <ProjectsSection />
+          </AnimatedSection>
+          <AnimatedSection>
+            <ContactSection />
+          </AnimatedSection>
         </div>
       </main>
       <Footer />

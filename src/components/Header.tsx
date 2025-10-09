@@ -16,9 +16,10 @@ const NavLink = ({ href, label, onClick }: { href: string; label: string; onClic
   <a
     href={href}
     onClick={onClick}
-    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground relative group"
   >
-    {label}
+    <span>{label}</span>
+    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
   </a>
 );
 
@@ -27,7 +28,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/60 backdrop-blur-lg">
       <div className="container flex h-14 items-center">
         <div className="mr-4 flex items-center">
           <a href="#" className="mr-6 flex items-center space-x-2">
@@ -47,7 +48,7 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[240px] sm:w-[300px]">
                 <SheetHeader className="text-left">
-                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col gap-6 text-lg font-medium mt-8">
                   {NAV_LINKS.map((link) => (

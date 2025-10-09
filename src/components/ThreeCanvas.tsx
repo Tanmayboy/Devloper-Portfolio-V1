@@ -28,7 +28,7 @@ const ThreeCanvas = () => {
     const particlesCount = 5000;
     const positions = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 10;
+      positions[i] = (Math.random() - 0.5) * 15;
     }
     const particlesGeometry = new THREE.BufferGeometry();
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -42,22 +42,23 @@ const ThreeCanvas = () => {
     scene.add(particles);
 
     // Mouse tracking
-    let mouseX = 0;
-    let mouseY = 0;
+    const mouse = new THREE.Vector2();
     const handleMouseMove = (event: MouseEvent) => {
-        mouseX = event.clientX - (currentMount.clientWidth / 2);
-        mouseY = event.clientY - (currentMount.clientHeight / 2);
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
-    currentMount.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove);
 
     // Animation
     const clock = new THREE.Clock();
     const animate = () => {
       const elapsedTime = clock.getElapsedTime();
 
-      particles.rotation.y = elapsedTime * 0.1;
-      particles.rotation.x = -mouseY * 0.0001;
-      particles.rotation.y += mouseX * 0.0001;
+      particles.rotation.y = elapsedTime * 0.05;
+      
+      // Particle acceleration based on mouse position
+      particles.rotation.x += (mouse.y * 0.5 - particles.rotation.x) * 0.02;
+      particles.rotation.y += (mouse.x * 0.5 - particles.rotation.y) * 0.02;
 
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
@@ -66,16 +67,18 @@ const ThreeCanvas = () => {
 
     // Resize handler
     const handleResize = () => {
-      camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+      if (currentMount) {
+        camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+      }
     };
     window.addEventListener('resize', handleResize);
 
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
-      currentMount.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', handleMouseMove);
       if (renderer.domElement.parentNode === currentMount) {
         currentMount.removeChild(renderer.domElement);
       }
