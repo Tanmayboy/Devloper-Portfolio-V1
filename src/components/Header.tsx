@@ -3,7 +3,7 @@
 import { Code2 } from 'lucide-react';
 import { useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { AnimatedMenuIcon } from './AnimatedMenuIcon';
 
 const NAV_LINKS = [
@@ -46,7 +46,10 @@ export default function Header() {
                 />
               </SheetTrigger>
               <SheetContent side="right" className="w-[240px] sm:w-[300px]">
-                <nav className="flex flex-col gap-6 text-lg font-medium mt-16">
+                <SheetHeader className="text-left">
+                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col gap-6 text-lg font-medium mt-8">
                   {NAV_LINKS.map((link) => (
                     <NavLink key={link.href} {...link} onClick={() => setIsOpen(false)} />
                   ))}
