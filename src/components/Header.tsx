@@ -1,12 +1,9 @@
 'use client';
 
 import { Code2 } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from './ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent, SheetTitle, SheetDescription } from './ui/sheet';
 import { useState } from 'react';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { AnimatedMenuIcon } from './AnimatedMenuIcon';
 
 const NAV_LINKS = [
@@ -30,7 +27,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/50 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         <div className="mr-4 flex items-center">
           <a href="#" className="mr-6 flex items-center space-x-2">
@@ -48,12 +45,8 @@ export default function Header() {
                   onClick={() => setIsOpen(!isOpen)}
                 />
               </SheetTrigger>
-              <SheetContent side="right">
-                <VisuallyHidden>
-                  <SheetTitle>Mobile Menu</SheetTitle>
-                  <SheetDescription>Navigation links for mobile view.</SheetDescription>
-                </VisuallyHidden>
-                <nav className="flex flex-col gap-6 text-lg font-medium mt-8">
+              <SheetContent side="right" className="w-[240px] sm:w-[300px]">
+                <nav className="flex flex-col gap-6 text-lg font-medium mt-16">
                   {NAV_LINKS.map((link) => (
                     <NavLink key={link.href} {...link} onClick={() => setIsOpen(false)} />
                   ))}
