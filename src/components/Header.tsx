@@ -4,9 +4,10 @@ import { Code2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from './ui/sheet';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 const NAV_LINKS = [
   { href: '#about', label: 'About' },
@@ -48,6 +49,10 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
+                <VisuallyHidden>
+                  <SheetTitle>Mobile Menu</SheetTitle>
+                  <SheetDescription>Navigation links for mobile view.</SheetDescription>
+                </VisuallyHidden>
                 <nav className="flex flex-col gap-6 text-lg font-medium mt-8">
                   {NAV_LINKS.map((link) => (
                     <NavLink key={link.href} {...link} onClick={() => setIsOpen(false)} />
