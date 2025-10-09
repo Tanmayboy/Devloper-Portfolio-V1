@@ -4,10 +4,10 @@ import { Code2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from './ui/sheet';
-import { Menu } from 'lucide-react';
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from './ui/sheet';
 import { useState } from 'react';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { AnimatedMenuIcon } from './AnimatedMenuIcon';
 
 const NAV_LINKS = [
   { href: '#about', label: 'About' },
@@ -43,10 +43,10 @@ export default function Header() {
           <div className="flex-1 flex justify-end">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu />
-                  <span className="sr-only">Toggle Menu</span>
-                </Button>
+                <AnimatedMenuIcon 
+                  isActive={isOpen}
+                  onClick={() => setIsOpen(!isOpen)}
+                />
               </SheetTrigger>
               <SheetContent side="right">
                 <VisuallyHidden>
