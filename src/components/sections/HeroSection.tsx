@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import ThreeCanvas from '@/components/ThreeCanvas';
 import { ArrowDown } from 'lucide-react';
